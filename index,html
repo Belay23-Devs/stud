@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2><i class="fas fa-graduation-cap"></i> EduManage</h2>
+
+        <p class="menu-title">MAIN MENU</p>
+
+        <nav>
+            <a href="#" class="active" data-page="dashboard">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <a href="#" data-page="students">
+                <i class="fas fa-users"></i> Students
+            </a>
+            <a href="#" data-page="courses">
+                <i class="fas fa-book"></i> Courses
+            </a>
+            <a href="#" data-page="results">
+                <i class="fas fa-chart-bar"></i> Results
+            </a>
+            <a href="#" data-page="attendance">
+                <i class="fas fa-calendar-check"></i> Attendance
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="#" data-page="settings">
+                <i class="fas fa-cog"></i> Settings
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOP NAVBAR -->
+        <header class="topbar">
+            <div>
+                <button id="menuBtn" class="menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2 id="pageTitle">Dashboard</h2>
+            </div>
+
+            <div class="profile">
+                <i class="fas fa-bell"></i>
+                <div class="avatar">A</div>
+                <div>
+                    <strong>Admin User</strong>
+                    <small>Administrator</small>
+                </div>
+            </div>
+        </header>
+
+        <!-- DASHBOARD PAGE -->
+        <section class="page active" id="dashboard">
+
+            <div class="welcome">
+                <div>
+                    <h2>Welcome back, Admin! 👋</h2>
+                    <p>Here's what's happening in your university today.</p>
+                </div>
+                <span id="today"></span>
+            </div>
+
+            <!-- STATISTICS -->
+            <div class="stats">
+
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <p>Total Students</p>
+                    <h2 id="totalStudents">0</h2>
+                    <small>Registered students</small>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <p>Total Courses</p>
+                    <h2 id="totalCourses">0</h2>
+                    <small>Available courses</small>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <p>Attendance</p>
+                    <h2 id="attendanceRate">0%</h2>
+                    <small>Present today</small>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <p>Average GPA</p>
+                    <h2 id="averageGPA">0.00</h2>
+                    <small>Student performance</small>
+                </div>
+
+            </div>
+
+            <!-- RECENT STUDENTS -->
+            <div class="content-card">
+                <div class="card-header">
+                    <h3>Recent Students</h3>
+                    <button class="primary-btn" onclick="showPage('students')">
+                        View All
+                    </button>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Student Name</th>
+                                <th>Department</th>
+                                <th>Year</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentStudents"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- STUDENTS PAGE -->
+        <section class="page" id="students">
+
+            <div class="page-heading">
+                <div>
+                    <h2>Students Management</h2>
+                    <p>Manage all registered university students.</p>
+                </div>
+                <button class="primary-btn" id="addStudentBtn">
+                    <i class="fas fa-plus"></i> Add Student
+                </button>
+            </div>
+
+            <input type="text" id="searchStudent"
+                   class="search-input"
+                   placeholder="Search students by name or ID...">
+
+            <div class="content-card">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                                <th>Year</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ADD STUDENT FORM -->
+            <div class="content-card" id="studentFormCard" hidden>
+                <h3 id="formTitle">Add New Student</h3>
+
+                <form id="studentForm">
+                    <input type="hidden" id="editStudentId">
+
+                    <div class="form-grid">
+                        <input type="text" id="studentName"
+                               placeholder="Full Name" required>
+
+                        <input type="email" id="studentEmail"
+                               placeholder="Email Address" required>
+
+                        <input type="text" id="studentDepartment"
+                               placeholder="Department" required>
+
+                        <select id="studentYear" required>
+                            <option value="">Select Year</option>
+                            <option>1st Year</option>
+                            <option>2nd Year</option>
+                            <option>3rd Year</option>
+                            <option>4th Year</option>
+                            <option>5th Year</option>
+                        </select>
+                    </div>
+
+                    <button class="primary-btn" type="submit">
+                        Save Student
+                    </button>
+                    <button class="secondary-btn" type="button"
+                            id="cancelStudent">
+                        Cancel
+                    </button>
+                </form>
+            </div>
+
+        </section>
+
+        <!-- COURSES PAGE -->
+        <section class="page" id="courses">
+            <div class="page-heading">
+                <div>
+                    <h2>Courses Management</h2>
+                    <p>Available university courses.</p>
+                </div>
+            </div>
+
+            <div class="course-grid" id="courseList"></div>
+        </section>
+
+        <!-- RESULTS PAGE -->
+        <section class="page" id="results">
+            <div class="page-heading">
+                <div>
+                    <h2>Student Results</h2>
+                    <p>Academic performance and GPA records.</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Course</th>
+                                <th>Mark / 100</th>
+                                <th>Grade</th>
+                                <th>GPA</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ATTENDANCE PAGE -->
+        <section class="page" id="attendance">
+            <div class="page-heading">
+                <div>
+                    <h2>Attendance Management</h2>
+                    <p>Mark students as present or absent.</p>
+                </div>
+                <span id="attendanceDate"></span>
+            </div>
+
+            <div class="content-card">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Student Name</th>
+                                <th>Department</th>
+                                <th>Attendance</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendanceTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SETTINGS PAGE -->
+        <section class="page" id="settings">
+            <div class="content-card">
+                <h2>Settings</h2>
+                <p>Manage your dashboard preferences.</p>
+                <button class="secondary-btn" id="themeBtn">
+                    <i class="fas fa-moon"></i> Toggle Dark Mode
+                </button>
+            </div>
+        </section>
+
+        <footer>
+            © 2026 EduManage | Student Management System
+        </footer>
+
+    </main>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
